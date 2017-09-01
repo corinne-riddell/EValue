@@ -1,0 +1,47 @@
+---
+title: "E-value"
+author: "Corinne Riddell"
+date: "9/1/2017"
+output: html_document
+---
+
+*Background*
+
+Scott suggested I make an online tool to calculate the e-value as a supplement to the relatively new paper by Vanderweele and Ding introducing the concept. As part of this pursuit I recreated their Figure 2 which looked like this:
+
+![Vanderweele Figure 2.](/Users/corinneriddell/Dropbox/Consulting 2017/Scott/evalue/Vanderweele-fig2.png)
+
+This plot is simply the function of RR_UD on RR_EU you get by solving the equation illustrated on the bottom of that figure. So I coded this function:
+```{r}
+rr.ud <- function(rr.eu) {
+  rr.ud <- (3.9*(1-rr.eu))/(3.9-rr.eu)
+  return(rr.ud)
+  }
+```
+
+And plotted it:
+
+```{r, warning=F, message=F}
+library(ggplot2)
+library(plotly)
+
+f <- ggplot(data.frame(rr.eu = c(-20, 20)), aes(rr.eu)) + 
+  stat_function(fun = rr.ud) + 
+  xlab("RR.EU") + ylab("RR.UD") 
+ggplotly(f)
+```
+
+This isn't quite what we want though. Both of the RRs are bound between 0 and infinity. Let's remake the plot with limits on the axes. Choosing the upper bound of the limits is somewhat arbritrary as far as I can tell, but the lower bounds are most definitely 0. To try and recreate their Figure 2, I'll use upper bounds of 20 for both axes. I'll also add the e-value of 7.26 to the image for completeness (and to inspire belief that this is indeed the correct function!)
+
+```{r}
+f <- ggplot(data.frame(rr.eu = c(0, 20)), aes(rr.eu)) + 
+  stat_function(fun = rr.ud) + scale_y_continuous(limits = c(0, 20)) + scale_x_continuous(limits = c(0, 20)) +
+  xlab("RR.EU") + ylab("RR.UD") + geom_point(dat = data.frame(rr.eu = 7.26, rr.ud = 7.26), aes(rr.eu, rr.ud))
+ggplotly(f)
+```
+
+This is looking better. But what is that little curve in the bottom corner? Hover over it to give values for RR.EU and RR.UD (here, denoted by y in the hover). I'm stumped. These values along this little curve would imply that you could have a confounder with protective relationships with exposure and disease (RR.EU = 0.4 and RR.UD = 0.669, as an example) that could explain away the estimated RR. 
+
+Am I doing something wrong here? 
+
+
