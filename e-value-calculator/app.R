@@ -64,7 +64,8 @@ ui <- fluidPage(
     tabPanel("About",
              HTML(paste0(
                "<br><br>The e-value was introduced by VanderWeele and Ding in 2017 in a publication in the Annals of Internal Medicine.<sup>1, 2</sup>",
-               " This calculator was created by Corinne Riddell to facilitate easy e-value computation. Please submit a pull request if you've uncovered a technical error or would like to suggest a stylistic improvement.<br><br>",
+               " This calculator was created by <a href='http://corinne-riddell.github.io/'>Corinne Riddell</a> to facilitate easy e-value computation. All of the code to create the app is available on <a href = 'https://github.com/corinne-riddell/EValue'>GitHub</a>.",
+               " Please open an issue or submit a pull request if you've uncovered a technical error or would like to suggest a stylistic improvement.<br><br>",
                "<b>References</b><br>",
                "1. VanderWeele TJ, Ding P. Sensitivity Analysis in Observational Research: Introducing the E-Value.<i> Annals of Internal Medicine</i>. 2017. 167(4):268-274.<br>", 
                "2. Ding P, VanderWeele TJ. Sensitivity Analysis without assumptions. <i>Epidemiology</i>. 2016. 27:368-77."
