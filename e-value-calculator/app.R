@@ -105,7 +105,9 @@ server <- function(input, output) {
      })
    
    output$e.val.cl.near1 <- renderUI({
+     if(input$est.RR >= input$LCL.RR & input$est.RR <= input$UCL.RR){ # estimated RR in range of CI:
      HTML(paste0("<br>The e-value for ", which.bound()," confidence bound is ", round(e.val.cl.near.1(), 2), "."))
+     }
    })
    
    output$curveOfExplainAway <- renderPlotly({
@@ -121,14 +123,14 @@ server <- function(input, output) {
      ggplotly(
        ggplot(data.frame(rr.eu = c(0, 20)), aes(rr.eu)) + 
          stat_function(fun = rr.ud) + 
-          scale_y_continuous(limits = c(0, e.val()*3)) + 
-          scale_x_continuous(limits = c(0, e.val()*3)) +
-         xlab("Risk ratio for exposure-confounder relationship") + ylab("Risk ratio for exposure-disease relationship") + 
+          scale_y_continuous(limits = c(1, e.val()*3)) + 
+          scale_x_continuous(limits = c(1, e.val()*3)) +
+         xlab("Risk ratio for exposure-confounder relationship") + ylab("Risk ratio for confounder-disease relationship") + 
          geom_point(dat = data.frame(rr.eu = e.val(), rr.ud = e.val()), aes(rr.eu, rr.ud)) +
           geom_text(dat = data.frame(rr.eu = e.val(), rr.ud = e.val()), 
                      aes(rr.eu, rr.ud), 
-                    label = paste0("E-value: (", round(e.val(), 2), ",", round(e.val(), 2),")"),
-                    nudge_x = 4, size = 3) + 
+                    label = paste0("E-value:\n (", round(e.val(), 2), ",", round(e.val(), 2),")"),
+                    nudge_x = e.val()*(3/5), size = 3) + 
          theme_minimal()
      )
    })       
