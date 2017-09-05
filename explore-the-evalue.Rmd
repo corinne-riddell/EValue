@@ -38,6 +38,13 @@ f <- ggplot(data.frame(rr.eu = c(0, 20)), aes(rr.eu)) +
   stat_function(fun = rr.ud) + scale_y_continuous(limits = c(0, 20)) + scale_x_continuous(limits = c(0, 20)) +
   xlab("RR.EU") + ylab("RR.UD") + geom_point(dat = data.frame(rr.eu = 7.26, rr.ud = 7.26), aes(rr.eu, rr.ud))
 ggplotly(f)
+
+g <- ggplotly(f)
+g$x$data[[2]]$text <- paste0("E-Value")
+g$x$data[[1]]$text
+
+g$x$data[[1]]$text <- gsub("y", "RR_UD", g$x$data[[1]])
+g$x$data[[1]]$text <- gsub("rr.eu", "RR_EU", g$x$data[[1]])
 ```
 
 This is looking better. But what is that little curve in the bottom corner? Hover over it to give values for RR.EU and RR.UD (here, denoted by y in the hover). I'm stumped. These values along this little curve would imply that you could have a confounder with protective relationships with exposure and disease (RR.EU = 0.4 and RR.UD = 0.669, as an example) that could explain away the estimated RR. 
