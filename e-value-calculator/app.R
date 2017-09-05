@@ -170,7 +170,7 @@ server <- function(input, output) {
   })
   
    output$e.value <- renderUI({
-     HTML(paste0("The e-value for the estimate of the ", input$selected_measure, " is ", round(e.val(), 2), ". The observed ", input$selected_measure, " of ", input$est.effect, " could be explained away by an unmeasured confounder that was associated with both the treatment and the outcome by a ", input$selected_measure, " of ", round(e.val(), 2),"-fold each, above and beyond the measured confounders, but weaker confounding cound not do so." ))
+     HTML(paste0("The e-value for the estimate of the ", input$selected_measure, " is ", round(e.val(), 2), ". The observed ", input$selected_measure, " of ", input$est.effect, " could be explained away by an unmeasured confounder that was associated with both the treatment and the outcome by a ", input$selected_measure, " of ", round(e.val(), 2),"-fold each, above and beyond the measured confounders, but weaker confounding could not do so." ))
      })
    
    output$e.val.cl.near1 <- renderUI({
